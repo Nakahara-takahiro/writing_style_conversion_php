@@ -1,21 +1,16 @@
-# the composer package lock file and install directory
-# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# /composer.lock
-/fuel/vendor
+# バイナリーファイルが生成されるフォルダー
+bin/
+# ライブラリーを収録するフォルダー
+lib/
+# pyenvの設定ファイル
+pyvenv.cfg
+# visual stadio codeの設定フォルダー
+.vscode/
+# Windowsが自動生成するキャッシュファイル
+Thumbs.db
 
-# the fuelphp document
-/docs/
+#管理画面のユーザー環境変数
+.env
 
-# you may install these packages with `oil package`.
-# http://fuelphp.com/docs/packages/oil/package.html
-# /fuel/packages/auth/
-# /fuel/packages/email/
-# /fuel/packages/oil/
-# /fuel/packages/orm/
-# /fuel/packages/parser/
-
-# dynamically generated files
-/fuel/app/logs/*/*/*
-/fuel/app/cache/*/*
-/fuel/app/config/crypt.php
+#ログファイル
+/data/logs

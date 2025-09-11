@@ -1,0 +1,180 @@
+/* ===== CSS Variables (カスタムプロパティ) ===== */
+:root {
+  /* Colors */
+  --color-primary: #0078d7;
+  --color-primary-hover: #005fa3;
+  --color-background: #f9f9f9;
+  --color-surface: #fff;
+  --color-text: #333;
+  --color-text-secondary: #666;
+  --color-border: #ccc;
+  
+  /* Spacing */
+  --spacing-xxs: 0.3rem;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.8rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.2rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  
+  /* Typography */
+  --font-family-base: "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.1rem;
+  
+  /* Layout */
+  --container-max-width: 700px;
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  
+  /* Shadow */
+  --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+}
+
+/* ===== Base Styles ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  margin: 0;
+  padding: var(--spacing-2xl);
+  line-height: 1.6;
+}
+
+/* ===== Layout Components ===== */
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-default);
+}
+
+/* ===== Typography ===== */
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  line-height: 1.3;
+}
+
+/* ===== Form Elements ===== */
+.textarea-wrapper {
+  position: relative;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* 右下に寄せる */
+  gap: var(--spacing-xxs);
+}
+
+textarea {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color var(--transition-fast);
+}
+
+.char-count {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.2);
+}
+
+.char-count {
+  position: absolute;
+  bottom: var(--spacing-sm);
+  right: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.radio-group {
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+/* ===== Button Component ===== */
+.btn {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  padding: calc(var(--spacing-sm) - 0.2rem) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  background-color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+/* ===== Result Section ===== */
+.result-box {
+  margin-top: var(--spacing-2xl);
+  text-align: center;
+}
+
+/* ===== Media Queries ===== */
+@media (max-width: 600px) {
+  body {
+    padding: var(--spacing-md);
+  }
+  
+  .container {
+    padding: var(--spacing-xl);
+  }
+  
+  textarea {
+    font-size: 0.9rem;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-lg);
+  }
+  
+  .radio-group {
+    flex-direction: column;
+    align-items: center;
+  }
+}
