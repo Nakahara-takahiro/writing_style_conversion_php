@@ -2,11 +2,8 @@
 session_start();
 
 // ファイルパスの設定（ドキュメントルート外の設定ファイルを読み込み）
-//require_once dirname(__DIR__, 2) . '/config/dotenv_wsc.php';
-//loadEnv(dirname(__DIR__, 2) . '/config/.env');
-
-require_once __DIR__ . '/dotenv_wsc.php';
-loadEnv(__DIR__ . '/.env');
+require_once dirname(__DIR__, 2) . '/config/dotenv_wsc.php';
+loadEnv(dirname(__DIR__, 2) . '/config/.env');
 
 // セキュリティヘッダーの設定
 header('X-Content-Type-Options: nosniff');
@@ -222,6 +219,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章変換アプリ</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
 </head>
 
 <body>
@@ -236,24 +244,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <form method="post" class="form-box" enctype="application/x-www-form-urlencoded">
             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-            
+
             <h2>文章を入力してください（最大1000字）</h2>
             <div class="textarea-wrapper">
                 <textarea id="inputText" name="text" cols="50" maxlength="1000"
-                    placeholder="ここに文章を入力してください..." 
+                    placeholder="ここに文章を入力してください..."
                     required
-                    autocomplete="off"><?= isset($_POST["text"]) && $errorMessage !== '' ? sanitizeInput($_POST["text"]) : '' ?></textarea>
+                    autocomplete="off"><?= isset($_POST["text"]) ? sanitizeInput($_POST["text"]) : '' ?></textarea>
                 <div id="charCount" class="char-count">0/1000字</div>
             </div>
-            
+
             <div class="radio-group">
                 <h3>変換スタイルを選択:</h3>
                 <div class="radio-grid">
                     <?php foreach ($allowedStyles as $styleOption): ?>
                         <label class="radio-item">
-                            <input type="radio" name="style" value="<?= htmlspecialchars($styleOption, ENT_QUOTES, 'UTF-8') ?>" 
-                                   required 
-                                   <?= (isset($_POST["style"]) && $_POST["style"] === $styleOption && $errorMessage !== '') ? 'checked' : '' ?>>
+                            <input type="radio" name="style" value="<?= htmlspecialchars($styleOption, ENT_QUOTES, 'UTF-8') ?>"
+                                required
+                                <?= (isset($_POST["style"]) && $_POST["style"] === $styleOption) ? 'checked' : '' ?>>
                             <span><?= htmlspecialchars($styleOption, ENT_QUOTES, 'UTF-8') ?></span>
                         </label>
                     <?php endforeach; ?>
@@ -268,6 +276,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <h2>変換結果</h2>
                 <textarea id="resultText" readonly><?= $resultText ?></textarea><br>
                 <button type="button" class="btn secondary" onclick="copyToClipboard()">コピーする</button>
+                <button type="button" class="btn secondary" onclick="clearAll()">すべて消去</button>
             </div>
         <?php endif; ?>
     </div>

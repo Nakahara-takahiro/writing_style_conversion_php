@@ -209,6 +209,19 @@ textarea:focus {
 
 #resultText {
   margin-bottom: var(--spacing-sm);
+  resize: none;
+  /* ユーザーによる手動リサイズを無効化 */
+  overflow: hidden;
+  /* スクロールバーを非表示 */
+  min-height: 120px;
+  /* 最小高さ */
+  transition: height 0.2s ease;
+  /* 滑らかなアニメーション */
+}
+
+.auto-resize {
+  box-sizing: border-box;
+  /* パディングを含めたサイズ計算 */
 }
 
 /* ===== Media Queries ===== */
