@@ -9,7 +9,8 @@ loadEnv(dirname(__DIR__, 2) . '/config/.env');
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
-header('Content-Security-Policy: default-src \'self\'; script-src \'self\'; style-src \'self\' \'unsafe-inline\';');
+$nonce = base64_encode(random_bytes(16));
+header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-$nonce' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; img-src 'self' https://www.google-analytics.com data:; frame-src 'self' https://www.googletagmanager.com;");
 header('Referrer-Policy: strict-origin-when-cross-origin');
 
 // APIキーの取得と検証
@@ -233,16 +234,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>文章変換アプリ</title>
     <link rel="stylesheet" href="static/css/style.css">
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZLY6LJ0ZM"></script>
+<script nonce="<?= $nonce ?>">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PZLY6LJ0ZM');
+</script>
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
 </head>
 
 <body>
@@ -268,7 +267,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     required
                     autocomplete="off"><?= htmlspecialchars($_POST["text"] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 <div id="charCount" class="char-count">0/1000字</div>
-            <button type="button" class="btn secondary" onclick="clearInputText()">入力テキスト消去</button>
+            <button type="button" class="btn secondary" id="clearInputBtn">入力テキスト消去</button>
             </div>
 
             <!--例文プルダウン -->
