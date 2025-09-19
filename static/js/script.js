@@ -1,3 +1,11 @@
+// プルダウンで例文を挿入
+document.getElementById("exampleSelect").addEventListener("change", function() {
+    const textArea = document.getElementById("inputText");
+    if (this.value !== "") {
+        textArea.value = this.value;
+    }
+});
+
 // 自動リサイズ機能（改良版）
 function autoResize(textarea) {
   if (!textarea) return;

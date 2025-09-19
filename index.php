@@ -22,6 +22,11 @@ if (!$api_key) {
 $resultText = '';
 $errorMessage = '';
 
+// POSTが空ならフォーム初期化（リロードでエラーにならないようにする）
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    $_POST = [];
+}
+
 // 許可されたスタイルのホワイトリスト
 $allowedStyles = [
     '営業メール',
@@ -235,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <div class="container">
         <h1>文章変換アプリ</h1>
-
+<p><a href="https://koto-ictclub.net/">制作:光都ICTクラブ</a></p>
         <?php if ($errorMessage !== ''): ?>
             <div class="error-box" style="color: #d32f2f; padding: 12px; margin: 15px 0; border: 1px solid #d32f2f; border-radius: 4px; background-color: #ffeaea;">
                 <strong>エラー:</strong> <?= $errorMessage ?>
@@ -253,7 +258,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     autocomplete="off"><?= isset($_POST["text"]) ? sanitizeInput($_POST["text"]) : '' ?></textarea>
                 <div id="charCount" class="char-count">0/1000字</div>
             </div>
-
+        <!-- 🔹 例文プルダウン -->
+        <label for="exampleSelect">例文を選択:</label>
+        <select id="exampleSelect">
+            <option value="">--選択してください--</option>
+            <option value="これはサンプル文1です。">サンプル文1</option>
+            <option value="これはサンプル文2です。">サンプル文2</option>
+        </select>
             <div class="radio-group">
                 <h3>変換スタイルを選択:</h3>
                 <div class="radio-grid">
