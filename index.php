@@ -25,7 +25,15 @@ $errorMessage = '';
 // POSTが空ならフォーム初期化（リロードでエラーにならないようにする）
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $_POST = [];
+    $errorMessage = '';
+    $resultText = '';
 }
+
+//例文の定義
+$examples = [
+    '挨拶文' => 'こんにちは。いつも気にかけてくれてありがとう。おかげさまで日々元気に過ごしています。お互いにそれぞれの場所で頑張っているけれど、こうして言葉を交わせることがとても心強いです。これからも新しいことに挑戦しながら、笑顔で前を向いて進んでいけたらと思っています。変わらず仲良くしてもらえると嬉しいです。',
+    'おたずね文' => 'こんにちは。最近よく話題になっているあのベストセラー、ついに手に取ってみました。読み進めるうちに考えさせられる部分や共感できるところが多くて、なかなか興味深かったです。きっとあなたならどう感じるだろうと気になって、ぜひ感想を聞きたくなりました。同じ本を読んだときの受け止め方って、人それぞれで違うから面白いですよね。今度会ったときにでも教えてもらえたら嬉しいです。'
+];
 
 // 許可されたスタイルのホワイトリスト
 $allowedStyles = [
@@ -240,7 +248,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <div class="container">
         <h1>文章変換アプリ</h1>
-<p><a href="https://koto-ictclub.net/">制作:光都ICTクラブ</a></p>
+        <div class="banner">
+  アプリ製作承ります。<a href="https://koto-ictclub.net/">光都ICTクラブ</a>
+</div>
+
         <?php if ($errorMessage !== ''): ?>
             <div class="error-box" style="color: #d32f2f; padding: 12px; margin: 15px 0; border: 1px solid #d32f2f; border-radius: 4px; background-color: #ffeaea;">
                 <strong>エラー:</strong> <?= $errorMessage ?>
@@ -248,31 +259,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
 
         <form method="post" class="form-box" enctype="application/x-www-form-urlencoded">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
 
             <h2>文章を入力してください（最大1000字）</h2>
             <div class="textarea-wrapper">
                 <textarea id="inputText" name="text" cols="50" maxlength="1000"
                     placeholder="ここに文章を入力してください..."
                     required
-                    autocomplete="off"><?= isset($_POST["text"]) ? sanitizeInput($_POST["text"]) : '' ?></textarea>
+                    autocomplete="off"><?= htmlspecialchars($_POST["text"] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 <div id="charCount" class="char-count">0/1000字</div>
+            <button type="button" class="btn secondary" onclick="clearInputText()">入力テキスト消去</button>
             </div>
-        <!-- 🔹 例文プルダウン -->
-        <label for="exampleSelect">例文を選択:</label>
-        <select id="exampleSelect">
-            <option value="">--選択してください--</option>
-            <option value="これはサンプル文1です。">サンプル文1</option>
-            <option value="これはサンプル文2です。">サンプル文2</option>
-        </select>
+
+            <!--例文プルダウン -->
+            <label for="exampleSelect">例文を選択:</label>
+            <select id="exampleSelect">
+                <option value="">--選択してください--</option>
+                <?php foreach ($examples as $label => $text): ?>
+                    <option value="<?= htmlspecialchars($text, ENT_QUOTES, 'UTF-8') ?>">
+                        <?= htmlspecialchars($label, ENT_QUOTES, 'UTF-8') ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
             <div class="radio-group">
                 <h3>変換スタイルを選択:</h3>
                 <div class="radio-grid">
                     <?php foreach ($allowedStyles as $styleOption): ?>
                         <label class="radio-item">
                             <input type="radio" name="style" value="<?= htmlspecialchars($styleOption, ENT_QUOTES, 'UTF-8') ?>"
-                                required
-                                <?= (isset($_POST["style"]) && $_POST["style"] === $styleOption) ? 'checked' : '' ?>>
+                                required>
                             <span><?= htmlspecialchars($styleOption, ENT_QUOTES, 'UTF-8') ?></span>
                         </label>
                     <?php endforeach; ?>

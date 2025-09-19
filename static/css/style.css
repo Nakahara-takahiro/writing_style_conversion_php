@@ -104,6 +104,29 @@ textarea:focus {
   margin-top: var(--spacing-xxs);
   margin-right: var(--spacing-xs);
 }
+/* ===== Banner Styles ===== */
+.banner {
+  margin: var(--spacing-lg) 0 var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-primary);
+  color: var(--color-surface);
+  text-align: center;
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-default);
+}
+
+.banner a {
+  color: var(--color-surface);
+  text-decoration: underline;
+  margin-left: var(--spacing-xs);
+  transition: color var(--transition-fast);
+}
+
+.banner a:hover {
+  color: #ffeb3b; /* 強調色（黄色系） */
+}
 
 /* ===== Radio Group Styles ===== */
 .radio-group {

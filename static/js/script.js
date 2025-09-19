@@ -280,6 +280,14 @@ function showMessage(message, type = "info") {
   }, 3000);
 }
 
+// 入力テキスト消去機能
+function clearInputText() {
+    const input = document.getElementById("inputText");
+    input.value = "";
+    const charCount = document.getElementById("charCount");
+    if (charCount) charCount.textContent = "0/1000字";
+}
+
 // すべて消去機能（修正版）
 function clearAll() {
   const inputText = document.getElementById("inputText");
