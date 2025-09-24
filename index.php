@@ -40,6 +40,7 @@ $examples = [
 $allowedStyles = [
     '営業メール',
     'プレスリリース',
+    '行政文書',
     'インフルエンサー',
     '戦国武将',
     'LINE公式アカウントのメッセージ',
@@ -234,13 +235,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>文章変換アプリ</title>
     <link rel="stylesheet" href="static/css/style.css">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PZLY6LJ0ZM"></script>
-<script nonce="<?= $nonce ?>">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-PZLY6LJ0ZM');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZLY6LJ0ZM"></script>
+    <script nonce="<?= $nonce ?>">
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-PZLY6LJ0ZM');
+    </script>
 
 </head>
 
@@ -248,8 +252,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="container">
         <h1>文章変換アプリ</h1>
         <div class="banner">
-  アプリ製作承ります。<a href="https://koto-ictclub.net/">光都ICTクラブ</a>
-</div>
+            アプリ製作承ります。<a href="https://koto-ictclub.net/">光都ICTクラブ</a>
+        </div>
 
         <?php if ($errorMessage !== ''): ?>
             <div class="error-box" style="color: #d32f2f; padding: 12px; margin: 15px 0; border: 1px solid #d32f2f; border-radius: 4px; background-color: #ffeaea;">
@@ -267,7 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     required
                     autocomplete="off"><?= htmlspecialchars($_POST["text"] ?? '', ENT_QUOTES, 'UTF-8') ?></textarea>
                 <div id="charCount" class="char-count">0/1000字</div>
-            <button type="button" class="btn secondary" id="clearInputBtn">入力テキスト消去</button>
+                <button type="button" class="btn secondary" id="clearInputBtn">入力テキスト消去</button>
             </div>
 
             <!--例文プルダウン -->
@@ -296,14 +300,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="submit" class="btn">変換する</button>
         </form>
 
-        <?php if ($resultText !== ''): ?>
-            <div class="result-box">
-                <h2>変換結果</h2>
-                <textarea id="resultText" readonly><?= $resultText ?></textarea><br>
-                <button type="button" class="btn secondary" onclick="copyToClipboard()">コピーする</button>
-                <button type="button" class="btn secondary" onclick="clearAll()">すべて消去</button>
-            </div>
-        <?php endif; ?>
+        <div class="result-box">
+            <h2>変換結果</h2>
+            <textarea id="resultText" readonly><?= $resultText ?></textarea><br>
+            <button type="button" class="btn secondary" onclick="copyToClipboard()">コピーする</button>
+            <button type="button" class="btn secondary" onclick="clearAll()">すべて消去</button>
+        </div>
     </div>
 
     <script src="static/js/script.js"></script>
