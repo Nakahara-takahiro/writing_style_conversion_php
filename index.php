@@ -9,8 +9,12 @@ loadEnv(dirname(__DIR__, 2) . '/config/.env');
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('X-XSS-Protection: 1; mode=block');
+<<<<<<< Updated upstream
 $nonce = base64_encode(random_bytes(16));
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-$nonce' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; img-src 'self' https://www.google-analytics.com data:; frame-src 'self' https://www.googletagmanager.com;");
+=======
+header("Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://www.google-analytics.com; img-src 'self' https://www.google-analytics.com data:;");
+>>>>>>> Stashed changes
 header('Referrer-Policy: strict-origin-when-cross-origin');
 
 // APIキーの取得と検証
@@ -43,7 +47,7 @@ $allowedStyles = [
     '行政文書',
     'インフルエンサー',
     '戦国武将',
-    'LINE公式アカウントのメッセージ',
+    'LINE公式アカウントのメッセージ（絵文字多め）',
     'ライトノベル',
     'ホラー小説'
 ];
@@ -236,7 +240,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="static/css/style.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZLY6LJ0ZM"></script>
+<<<<<<< Updated upstream
     <script nonce="<?= $nonce ?>">
+=======
+    <script>
+>>>>>>> Stashed changes
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
