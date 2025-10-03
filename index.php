@@ -51,14 +51,16 @@ $examples = [
 
 // 許可されたスタイル
 $allowedStyles = [
+    'インフルエンサー',
+    '戦国武将',
+    'ギャル語',
     '営業メール',
     'プレスリリース',
-    'インフルエンサー',
     '行政文書',
-    '戦国武将',
     'LINE公式アカウントのメッセージ',
     'ライトノベル',
-    'ホラー小説'
+    'ホラー小説',
+    '明治の文豪'
 ];
 
 // レート制限
@@ -242,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
     <div class="container">
-        <h1>文章変換アプリ</h1>
+        <h1>キャラ変ライター</h1>
         <div class="banner">
             アプリ製作承ります。<a href="https://koto-ictclub.net/">光都ICTクラブ</a>
         </div>
